@@ -14,7 +14,6 @@ export default function App() {
     event.preventDefault()
 
     const newSong = {
-      id: songs.length + 1,
       songName,
       artistName
     }
@@ -39,12 +38,6 @@ export default function App() {
     })
   }
 
-  // function addSong(newSong) {
-  //   postSong(newSong)
-  //   .then(data => setSongs([...songs, data]))
-  //   .catch(error => console.log(error.message))
-  // }
-
   function addSong(newSong) {
     const postSong = () => {
       return fetch("http://localhost:8080/api/v1/playlist", {
@@ -53,7 +46,6 @@ export default function App() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: newSong.id,
           songName: newSong.songName,
           artistName: newSong.artistName,
         }),
