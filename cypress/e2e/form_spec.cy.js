@@ -37,7 +37,17 @@ describe("Playlist Form", () => {
 
     cy.intercept("POST", "http://localhost:8080/api/v1/playlist", {
       statusCode: 201,
-      fixture:
+      fixture: "playlistPost.json"
     });
+
+    cy.get("form")
+      .get('input[name="song-name"]')
+      .type("Me & U")
+      .should("have.value", "Me & U")
+      .get('input[name="artist-name"]')
+      .type("Tems")
+      .should("have.value", "Tems");
+
+    cy.get('button[name="submit-button"]').click()
   })
 })
