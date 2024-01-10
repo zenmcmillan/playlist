@@ -31,6 +31,11 @@ export default function App() {
     setArtistName("")
   }
 
+  function deleteCard(id) {
+    const filteredSongs = songs.filter(song => song.id !== id)
+    setSongs(filteredSongs)
+  }
+
   return (
     <main className="App">
       <h1>Playlist</h1>
@@ -43,7 +48,7 @@ export default function App() {
         setArtistName={setArtistName}
         submitSong={submitSong}
       />
-      <CardContainer songs={songs} />
+      <CardContainer songs={songs} deleteCard={deleteCard} />
     </main>
   );
 }
