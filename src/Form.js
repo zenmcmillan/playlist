@@ -1,12 +1,12 @@
 import React from 'react';
 import './Form.css';
 
-export default function Form() {
+export default function Form({submitSong, songName, artistName, setSongName, setArtistName}) {
   return (
     <form>
-      <input type="text" placeholder="Song Name" name="song-name" />
-      <input type="text" placeholder="Artist Name" name="song-name" />
-      <button className="submit-button">Submit</button>
+      <input type="text" placeholder="Song Name" value={songName} name="song-name" onChange={event => setSongName(event.target.value)} />
+      <input type="text" placeholder="Artist Name" value={artistName} name="song-name" onChange={event => setArtistName(event.target.value)}/>
+      <button className="submit-button" onClick={event => submitSong(event)}>Submit</button>
     </form>
   );
 }
