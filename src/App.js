@@ -1,18 +1,20 @@
 import './App.css';
 import Form from './Form';
 import CardContainer from './CardContainer';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import {getPlaylist} from './apiCalls';
 
 export default function App() {
   const [songs, setSongs] = useState([]);
   const [songName, setSongName] = useState("");
   const [artistName, setArtistName] = useState("");
-
+  const [error, setError] = useState("")
+  
   function submitSong(event) {
     event.preventDefault()
 
     const newSong = {
-      id: Date.now(),
+      id: songs.length + 1,
       songName,
       artistName
     }
@@ -20,6 +22,21 @@ export default function App() {
       addSong(newSong)
       clearInput();
     }
+  }
+
+  useEffect(() => {
+    fetchPlaylist()
+  }, [])
+
+  const fetchPlaylist = () => {
+    getPlaylist()
+    .then((data) => {
+      setSongs(data)
+      console.log(data)
+    })
+    .catch((error) => {
+      setError(error.message)
+    })
   }
 
   function addSong(newSong) {
@@ -48,7 +65,10 @@ export default function App() {
         setArtistName={setArtistName}
         submitSong={submitSong}
       />
-      <CardContainer songs={songs} deleteCard={deleteCard} />
+      <CardContainer
+        songs={songs}
+        deleteCard={deleteCard}
+      />
     </main>
   );
 }
