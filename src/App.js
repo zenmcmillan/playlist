@@ -1,18 +1,19 @@
 import './App.css';
 import Form from './Form';
 import CardContainer from './CardContainer';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import {getPlaylist} from './apiCalls';
 
 export default function App() {
   const [songs, setSongs] = useState([]);
   const [songName, setSongName] = useState("");
   const [artistName, setArtistName] = useState("");
-
+  const [error, setError] = useState("")
+  
   function submitSong(event) {
     event.preventDefault()
 
     const newSong = {
-      id: Date.now(),
       songName,
       artistName
     }
@@ -22,8 +23,40 @@ export default function App() {
     }
   }
 
+  useEffect(() => {
+    fetchPlaylist()
+  }, [])
+
+  const fetchPlaylist = () => {
+    getPlaylist()
+    .then((data) => {
+      setSongs(data)
+      console.log(data)
+    })
+    .catch((error) => {
+      setError(error.message)
+    })
+  }
+
   function addSong(newSong) {
-    setSongs([...songs, newSong])
+    const postSong = () => {
+      return fetch("http://localhost:8080/api/v1/playlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          songName: newSong.songName,
+          artistName: newSong.artistName,
+        }),
+      }).then((response) => response.json());
+    };
+    postSong(newSong)
+      .then((data) => {
+        setSongs([...songs, data]);
+        console.log("POST", data);
+      })
+      .catch((error) => console.log(error.message));  
   }
 
   function clearInput() {
@@ -48,7 +81,10 @@ export default function App() {
         setArtistName={setArtistName}
         submitSong={submitSong}
       />
-      <CardContainer songs={songs} deleteCard={deleteCard} />
+      <CardContainer
+        songs={songs}
+        deleteCard={deleteCard}
+      />
     </main>
   );
 }
