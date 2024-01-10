@@ -39,8 +39,32 @@ export default function App() {
     })
   }
 
+  // function addSong(newSong) {
+  //   postSong(newSong)
+  //   .then(data => setSongs([...songs, data]))
+  //   .catch(error => console.log(error.message))
+  // }
+
   function addSong(newSong) {
-    setSongs([...songs, newSong])
+    const postSong = () => {
+      return fetch("http://localhost:8080/api/v1/playlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: newSong.id,
+          songName: newSong.songName,
+          artistName: newSong.artistName,
+        }),
+      }).then((response) => response.json());
+    };
+    postSong(newSong)
+      .then((data) => {
+        setSongs([...songs, data]);
+        console.log("POST", data);
+      })
+      .catch((error) => console.log(error.message));  
   }
 
   function clearInput() {
