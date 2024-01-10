@@ -1,25 +1,55 @@
-import logo from './logo.svg';
 import './App.css';
+import Form from './Form';
+import CardContainer from './CardContainer';
+import { useState } from 'react';
 
-function App() {
+export default function App() {
+  const [songs, setSongs] = useState([]);
+  const [songName, setSongName] = useState("");
+  const [artistName, setArtistName] = useState("");
+
+  function submitSong(event) {
+    event.preventDefault()
+
+    const newSong = {
+      id: Date.now(),
+      songName,
+      artistName
+    }
+    if (songName && artistName) {
+      addSong(newSong)
+      clearInput();
+    }
+  }
+
+  function addSong(newSong) {
+    setSongs([...songs, newSong])
+  }
+
+  function clearInput() {
+    setSongName("")
+    setArtistName("")
+  }
+
+  function deleteCard(id) {
+    const filteredSongs = songs.filter(song => song.id !== id)
+    setSongs(filteredSongs)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className="App">
+      <h1>Playlist</h1>
+      <Form
+        songs={songs}
+        setSongs={setSongs}
+        songName={songName}
+        setSongName={setSongName}
+        artistName={artistName}
+        setArtistName={setArtistName}
+        submitSong={submitSong}
+      />
+      <CardContainer songs={songs} deleteCard={deleteCard} />
+    </main>
   );
 }
 
-export default App;
