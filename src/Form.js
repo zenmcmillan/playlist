@@ -5,8 +5,8 @@ export default function Form({submitSong, songName, artistName, setSongName, set
   return (
     <form>
       <input type="text" placeholder="Song Name" value={songName} name="song-name" onChange={event => setSongName(event.target.value)} />
-      <input type="text" placeholder="Artist Name" value={artistName} name="song-name" onChange={event => setArtistName(event.target.value)}/>
-      <button className="submit-button" onClick={event => submitSong(event)}>Submit</button>
+      <input type="text" placeholder="Artist Name" value={artistName} name="artist-name" onChange={event => setArtistName(event.target.value)}/>
+      <button className="submit-button" name="submit-button" onClick={event => submitSong(event)}>Submit</button>
     </form>
   );
 }
