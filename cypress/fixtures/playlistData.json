@@ -1,0 +1,22 @@
+[
+  {
+    "songName": "Swear",
+    "artistName": "Casiopea",
+    "id": 1
+  },
+  {
+    "songName": "Autumn Leaves",
+    "artistName": "Bill Evans Trio",
+    "id": 2
+  },
+  {
+    "songName": "Fair Weather",
+    "artistName": "Art Farmer",
+    "id": 3
+  },
+  {
+    "songName": "Django",
+    "artistName": "The Modern Jazz Quartet",
+    "id": 4
+  }
+]
