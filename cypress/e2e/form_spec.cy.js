@@ -6,7 +6,7 @@ describe("Playlist Form", () => {
     })
     cy.visit("http://localhost:3000/");
   })
-  it("should have a form with 2 inputs, a button and a header and fill form out and post it", () => {
+  it("should have a form with 2 inputs, a button and a header, and fill form out and post it", () => {
 
     cy.get("h1").contains("Playlist")
 
@@ -49,5 +49,11 @@ describe("Playlist Form", () => {
       .should("have.value", "Tems");
 
     cy.get('button[name="submit-button"]').click()
+
+    cy.get('.songs-container').children().should('have.length', 5)
+
+    cy.get('.songs-container').last().contains("Tems")
+    .get('.songs-container').last().contains("Me & U")
+    .get(".songs-container").last().contains("🗑️")
   })
 })
